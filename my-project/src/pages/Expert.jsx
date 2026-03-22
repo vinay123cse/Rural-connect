@@ -1,87 +1,9 @@
-// import { useLocation } from "react-router-dom";
-// import ProCard from "../components/ProCard.jsx";
-
-// const Experts = () => {
-//   const { pathname } = useLocation();
-
-//   const categoryMap = {
-//     "/": "all",
-//     "/healthcare": "healthcare",
-//     "/education": "education",
-//     "/technical": "technical",
-//     "/agriculture": "agriculture",
-//   };
-
-//   const activeCategory = categoryMap[pathname] || "all";
-
-//   const experts = [
-//     {
-//       id: 1,
-//       name: "Dr. Sharma",
-//       category: "healthcare",
-//       subSkill: "Rural Doctor",
-//       location: "Bihar",
-//       rate: "₹500/day",
-//       available: true,
-//       experience: "10 years",
-//       rating: "4.8",
-//       dp: "https://i.pravatar.cc/150?img=1",
-//       color: "text-red-600",
-//       phone: "9876543210",
-//     },
-//     {
-//       id: 2,
-//       name: "Rahul Sir",
-//       category: "education",
-//       subSkill: "Maths Teacher",
-//       location: "UP",
-//       rate: "₹600/day",
-//       available: false,
-//       experience: "7 years",
-//       rating: "4.6",
-//       dp: "https://i.pravatar.cc/150?img=2",
-//       color: "text-blue-600",
-//       phone: "9876543222",
-//     },
-//     {
-//       id: 3,
-//       name: "Dr. Sharma",
-//       category: "agriculture",
-//       subSkill: "Rural Doctor",
-//       location: "Bihar",
-//       rate: "₹500/day",
-//       available: true,
-//       experience: "10 years",
-//       rating: "4.8",
-//       dp: "https://i.pravatar.cc/150?img=1",
-//       color: "text-red-600",
-//       phone: "9876543210",
-//     },
-//   ];
-
-//   const filteredExperts =
-//     activeCategory === "all"
-//       ? experts
-//       : experts.filter((e) => e.category === activeCategory);
-
-//   return (
-//     <div className="max-w-7xl mx-auto px-4 py-6">
-//       {/* Pros Grid */}
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-//           {filteredExperts.map((pro, index) => (
-//             <ProCard key={index} {...pro} />
-//           ))}
-//         </div>
-//     </div>
-//   );
-// };
-
-// export default Experts;
+/
 
 
 import React, { useEffect, useState } from "react"; // 1. Hooks import karo
 import { useLocation } from "react-router-dom";
-import ProCard from "../components/ProCard.jsx";
+import ProCard from "../components/Procard.jsx";
 import axios from "axios"; // 2. axios import karo
 
 const Experts = () => {
