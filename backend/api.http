@@ -1,0 +1,57 @@
+POST http://localhost:3000/signup
+Content-Type: application/json
+
+{
+    "phone": "1234567890",
+    "password": "12345"
+}
+
+### Response
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+   "phone": "1234567890",
+    "password": "12345"
+}
+
+
+### Response
+
+POST http://localhost:3000/signup
+Content-Type: application/json
+
+{
+    
+    "phone": "9569935517",
+    "password": "123456"
+}
+
+### Response
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    
+    "phone": "9569935517",
+    "password": "123456"
+}
+### Response
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "jane.smith@example.com",
+    "password": "password123"
+}
+
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "email": "abcd@gmail.com",
+    "password": "12345"
+
+}
