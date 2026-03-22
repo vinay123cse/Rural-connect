@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import ProCard from "../components/ProCard.jsx";
+import ProCard from "../components/Procard.jsx";
 import Searchbar from '../components/Searchbar.jsx';
 
 function Body() {
