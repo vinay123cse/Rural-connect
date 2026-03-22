@@ -5,7 +5,7 @@ import Home from './pages/Home'
 import { Route, Routes } from 'react-router-dom';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import EditProfile from './authorization/editProfile.jsx';
+import EditProfile from './authorization/EditProfile.jsx';
 import Experts from './pages/Expert.jsx';
 import { Toaster } from 'react-hot-toast';
 import { useLocation } from 'react-router-dom';
