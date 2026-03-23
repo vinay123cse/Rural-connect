@@ -30,13 +30,13 @@ const Navbar = () => {
             </div>
 
             {/* Main Tabs (Indeed Style) */}
-            <div className="hidden lg:flex ml-10 space-x-4 h-16">
+            <div className="hidden lg:flex ml-10 space-x-4 h-16 no-scrollbar scroll-smooth">
               {categories.map((cat) => (
                 <Link
                   key={cat.name}
                   to={cat.path}
                   onClick={() => setActiveTab(cat.name)}
-                  className={`relative px-3 h-full flex items-center text-sm font-bold transition-all text-base ${
+                  className={`relative px-3 h-full flex items-center text-sm font-bold transition-all ${
                     activeTab === cat.name
                       ? 'text-slate-900 after:absolute after:bottom-0 after:left-0 after:w-full after:h-1 after:bg-emerald-600'
                       : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'
@@ -54,14 +54,14 @@ const Navbar = () => {
               <div className='py-2 px-4 rounded-lg bg-emerald-50 flex items-center gap-2'>
               <Link
                 to="/signup"
-                className="text-sm font-bold text-emerald-600 hover:text-emerald-800"
+                className="sm:text-sm font-bold text-emerald-600 hover:text-emerald-800"
               >
                 SignUp
               </Link>
-              <div className="w-[1px] h-6 bg-slate-400 mx-2 hidden sm:block"></div>
+              <div className="w-[1px] h-6 bg-slate-400 mx-2"></div>
               <Link
                 to="/login"
-                className="text-sm font-bold text-emerald-600 hover:text-slate-900"
+                className="sm:text-sm font-bold text-emerald-600 hover:text-slate-900"
               >
                 Login
               </Link>
@@ -72,7 +72,7 @@ const Navbar = () => {
             ) : (
             <>
             <button
-              className="flex items center gap-2 sm:text-sm font-bold text-emerald-600 hover:text-slate-900 px-4 py-2 transition-all"
+              className="flex items-center gap-2 sm:text-sm font-bold text-emerald-600 hover:text-slate-900 px-4 py-2 transition-all"
               onClick={logout}
               disabled={isLoggedOut}
               >
@@ -86,7 +86,7 @@ const Navbar = () => {
               )}
               
             </button>
-            <Link to="/editprofile" className="hidden sm:block text-sm font-bold text-emerald-600 hover:underline px-4 py-2">
+            <Link to="/editprofile" className="sm:text-sm font-bold text-emerald-600 hover:text-slate-900 px-4 py-2">
               Edit Profile
             </Link>
             </>

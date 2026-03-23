@@ -6,12 +6,15 @@ export default function Searchbar({onSearch}) {
   const [job, setJob] = useState("");
   const [location, setLocation] = useState("");
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     onSearch({ job, location });
   }
 
   return (
-    <div className="w-full max-w-4xl bg-white shadow-lg rounded-3xl p-3 border border-gray-200 hover:border-gray-300 flex flex-col md:flex-row items-stretch gap-3 mt-6 mx-auto">
+    <form 
+    className="w-full max-w-4xl bg-white shadow-lg rounded-3xl p-3 border border-gray-200 hover:border-gray-300 flex flex-col md:flex-row items-stretch gap-3 mt-6 mx-auto"
+    onSubmit={handleSearch}>
 
        
             {/* Job input */}
@@ -39,11 +42,11 @@ export default function Searchbar({onSearch}) {
             {/* Search button */}
             <button 
             className="bg-green-600 hover:bg-green-700 transition text-white font-semibold px-8 py-3 rounded-3xl hidden sm:block" 
-            onClick={handleSearch}
+            
             type='submit'>
                 Find jobs
             </button>
-    </div>
+    </form>
 
     
   )
