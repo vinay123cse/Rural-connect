@@ -7,11 +7,12 @@ import toast from "react-hot-toast";
 
 export const AuthContext =  createContext();
 
+const isLocal = window.location.hostname === "localhost";
 export const client = axios.create({
-    baseURL: "http://localhost:3000",
-    headers: {
-    "Content-Type": "application/json"
-  },
+    baseURL: isLocal 
+        ? "http://localhost:3000" 
+        : "https://rural-connect-6jba.onrender.com",
+    headers: { "Content-Type": "application/json" },
 })
 
 
