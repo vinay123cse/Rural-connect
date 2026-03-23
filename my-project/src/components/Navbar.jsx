@@ -72,7 +72,7 @@ const Navbar = () => {
             ) : (
             <>
             <button
-              className="hidden sm:block text-sm font-bold text-emerald-600 hover:text-slate-900 px-4 py-2"
+              className="flex items center gap-2 sm:text-sm font-bold text-emerald-600 hover:text-slate-900 px-4 py-2 transition-all"
               onClick={logout}
               disabled={isLoggedOut}
               >
