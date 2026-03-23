@@ -29,7 +29,7 @@ const Experts = () => {
       try {
         setLoading(true);
         // Apni Backend API ka URL dalo yahan
-        const response = await axios.get("http://localhost:3000/get_nearby"); 
+        const response = await axios.get("https://rural-connect-6jba.onrender.com/get_nearby"); 
         setExperts(response.data); // DB se aaya data state mein set kar diya
         setLoading(false);
       } catch (error) {

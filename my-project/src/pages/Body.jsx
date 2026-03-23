@@ -49,7 +49,7 @@ useEffect(() => {
       setLoading(true); // Shuru mein loading true
       
       // Seedha API call, koi location ki zaroorat nahi
-      const response = await axios.get("http://localhost:3000/get_nearby"); 
+      const response = await axios.get("https://rural-connect-6jba.onrender.com/get_nearby"); 
       
       console.log("Database se aaya data:", response.data);
       setPros(response.data);
