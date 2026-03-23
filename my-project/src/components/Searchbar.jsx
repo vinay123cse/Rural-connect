@@ -37,7 +37,7 @@ export default function Searchbar({onSearch}) {
             
             
             {/* Search button */}
-            <button className="bg-green-600 hover:bg-green-700 transition text-white font-semibold px-8 py-3 rounded-3xl" onClick={handleSearch}>
+            <button className="bg-green-600 hover:bg-green-700 transition text-white font-semibold px-8 py-3 rounded-3xl hidden sm:block" onClick={handleSearch}>
                 Find jobs
             </button>
     </div>

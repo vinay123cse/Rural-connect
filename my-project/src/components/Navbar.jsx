@@ -36,7 +36,7 @@ const Navbar = () => {
                   key={cat.name}
                   to={cat.path}
                   onClick={() => setActiveTab(cat.name)}
-                  className={`relative px-3 h-full flex items-center text-sm font-bold transition-all ${
+                  className={`relative px-3 h-full flex items-center text-sm font-bold transition-all text-base ${
                     activeTab === cat.name
                       ? 'text-slate-900 after:absolute after:bottom-0 after:left-0 after:w-full after:h-1 after:bg-emerald-600'
                       : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'
