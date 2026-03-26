@@ -20,7 +20,7 @@ const ExpertProfileForm = () => {
     rate: "",
     rating: 0,
     available: true,
-    dp: "",
+    dp: "null",
     color: "text-emerald-500",
     locationName: "",
   
@@ -28,23 +28,40 @@ const ExpertProfileForm = () => {
   
   
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked, files } = e.target;
 
     setFormData({
       ...formData,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type ==="file" ? files[0] : type === "checkbox" ? checked : value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!formData.name || !formData.category || !formData.subSkill || !formData.experience || !formData.rate || !formData.locationName || !formData.dp || !formData.rating) {
+    if(!formData.name || !formData.category || !formData.subSkill || !formData.experience || !formData.rate || !formData.locationName) {
       toast.error("Please fill all required fields!");
       return;
     }
     
     try{
-      const response = await updateProfile(formData);
+
+      const dataForBackend = new FormData();
+      
+      
+      dataForBackend.append("name", formData.name);
+      dataForBackend.append("category", formData.category);
+      dataForBackend.append("subSkill", formData.subSkill);
+      dataForBackend.append("experience", formData.experience);
+      dataForBackend.append("rate", formData.rate);
+      dataForBackend.append("rating", formData.rating);
+      dataForBackend.append("locationName", formData.locationName);
+      dataForBackend.append("available", formData.available);
+
+      if(formData.dp){
+        dataForBackend.append("dp", formData.dp);
+      }
+      
+      const response = await updateProfile(dataForBackend);
       if(response){
         toast.success("Profile updated successfully!");
         Navigate("/");
@@ -52,6 +69,7 @@ const ExpertProfileForm = () => {
 
     }catch(error){
       console.error(error.message || "Profile update failed");
+      toast.error("profile update failed")
     }
 
     
@@ -73,6 +91,7 @@ const ExpertProfileForm = () => {
       <form
         onSubmit={handleSubmit}
         className="max-w-xl mx-auto p-6 bg-white shadow rounded space-y-4 my-auto mt-10"
+        encType="multipart/form-data"
       >
         
         <input
@@ -134,12 +153,13 @@ const ExpertProfileForm = () => {
         />
 
         <input
-          type="text"
+          type="file"
           name="dp"
-          value={formData.dp}
-          placeholder="Profile Image URL"
+          
+          placeholder="Upload a photo"
           onChange={handleChange}
           className="w-full p-2 border rounded focus:outline-none focus:ring-1 focus:ring-emerald-400"
+          accept="image/*"
         />
 
         <input
@@ -176,3 +196,4 @@ const ExpertProfileForm = () => {
 };
 
 export default ExpertProfileForm;
+

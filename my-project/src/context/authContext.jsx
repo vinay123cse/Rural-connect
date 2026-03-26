@@ -29,6 +29,7 @@ export const AuthProvider = ({children}) => {
         const token = localStorage.getItem("token");
         const user = localStorage.getItem("user");
         if(token && user){
+            
             setUserData({token, user: JSON.parse(user)});
         }
     }, []);
@@ -39,6 +40,7 @@ export const AuthProvider = ({children}) => {
         try{
             const response = await client.post("/signup", data);
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("user", JSON.stringify(response.data.user));
             setUserData(response.data);
             
             return response.data;
@@ -89,9 +91,11 @@ export const AuthProvider = ({children}) => {
             const token = localStorage.getItem("token");
             const response = await client.put("/update_profile", data, {
                 headers: {
+                    "Content-Type" :"multipart/form-data",
                     Authorization: `Bearer ${token}`,
                 },
             });
+            localStorage.setItem("user", JSON.stringify(response.data.user));
             setUserData(response.data);
             navigate("/");
             return response.data;

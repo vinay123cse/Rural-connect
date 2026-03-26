@@ -45,8 +45,9 @@ function Body() {
 
 useEffect(() => {
   const fetchPros = async () => {
+    setLoading(true);
     try {
-      setLoading(true); // Shuru mein loading true
+       // Shuru mein loading true
       
       // Seedha API call, koi location ki zaroorat nahi
       const response = await axios.get("https://rural-connect-6jba.onrender.com/get_nearby"); 
@@ -117,7 +118,8 @@ const handleSearch = (searchData) => {
             filteredPros.map((pro) => (
               
               <ProCard 
-                key={pro._id} 
+                key={pro._id}
+                _id={pro._id} 
                 name={pro.name}
                 category={pro.category}
                 subSkill={pro.subSkill}

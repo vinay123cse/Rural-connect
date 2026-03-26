@@ -6,6 +6,7 @@ import { AuthContext } from '../context/authContext';
 const Navbar = () => {
 
   const { userData, logout, isLoggedOut } = useContext(AuthContext);
+  console.log(userData);
 
   const [activeTab, setActiveTab] = useState('All Experts');
   const categories = [
@@ -36,7 +37,7 @@ const Navbar = () => {
                   key={cat.name}
                   to={cat.path}
                   onClick={() => setActiveTab(cat.name)}
-                  className={`relative px-3 h-full flex items-center text-sm font-bold transition-all ${
+                  className={`relative px-3 h-full flex items-center sm:text-base font-bold transition-all ${
                     activeTab === cat.name
                       ? 'text-slate-900 after:absolute after:bottom-0 after:left-0 after:w-full after:h-1 after:bg-emerald-600'
                       : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'
@@ -86,9 +87,20 @@ const Navbar = () => {
               )}
               
             </button>
-            <Link to="/editprofile" className="sm:text-sm font-bold text-emerald-600 hover:text-slate-900 px-4 py-2">
+            {/* <Link to="/editprofile" className="sm:text-sm font-bold text-emerald-600 hover:text-slate-900 px-4 py-2">
               Edit Profile
-            </Link>
+            </Link> */}
+            <div className='w-10 h-10 rounded-full overflow-hidden bg-emerald-50 border border-slate-300 flex items-center justify-center '>
+              {userData?.user?.dp ? (
+                <img src={userData?.user?.dp || userData?.dp} alt="profile" className='w-full h-full object-cover' />
+              ) : (
+                <span className='text-emerald-700 font-bold text-lg leading-none'>
+                  {userData?.user?.name?.charAt(0).toUpperCase()}
+                </span>
+                
+              )}
+              
+            </div>
             </>
             )}
             
