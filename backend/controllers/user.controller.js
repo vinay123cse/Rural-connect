@@ -53,15 +53,14 @@ export const loginUser = async (req, res) => {
         const token = jwt.sign({ id: user._id, phone: user.phone }, process.env.JWT_SECRET, { expiresIn: process.env.EXPIRES_IN });
         console.log("Generated token:", token);
         console.log("login successful for user:", user);
+
+        const { password: _, ...userData } = user._doc;  //password chhodkr baaki sb frontend ko bhej do
+
         res.status(200).json({
             success: true,
             message: "Login successful",
             token,
-            user: {
-                id: user._id,
-                name: user.name,
-                phone: user.phone
-            }
+            user: userData
     });
 
     }catch (error) {
@@ -103,6 +102,20 @@ export const getNearByUsers = async (req, res) => {
         return res.json(users);
 
     }catch(error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+export const getReceiverProfile = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findById(id).select("-password");
+        if(!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+        //console.log("Receiver profile data:", user);
+        res.status(200).json(user);
+    } catch (error) {
         res.status(500).json({ message: error.message });
     }
 }

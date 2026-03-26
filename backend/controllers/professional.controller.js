@@ -3,37 +3,53 @@ import { getLatLngFromLocation as geocoding } from "../services/geocoding.js";
 
 
 export const addProfessional = async (req, res) => {
-    console.log("Received profile update request with body:", req.body);
+    //console.log("Received profile update request with body:", req.body);
     try {
-        const {name, category, subSkill, experience, rate, dp, locationName} = req.body;
+        const {name, category, subSkill, experience, rate, locationName} = req.body;
+
+        let dpUrl;
+        if(req.file) {
+            dpUrl = req.file.path;
+        }
+        console.log(req.file);
 
         const {lat, lon} = await geocoding(locationName);
         console.log(`Geocoding result for location "${locationName}": lat=${lat}, lon=${lon}`);
 
-        const updatedUser = await User.findByIdAndUpdate(
-            req.userId,
+        const updatedUser = 
+            
             {
                 name,
                 category,
                 subSkill,
                 experience,
                 rate,
-                dp,
+                
                 locationName,
                 location: {
                     type: "Point",
                     coordinates: [lon, lat]
                 },
                 isProfileComplete: true
-            },
-            { new: true }
-        ).select("-password");
+            };
 
-        if (!updatedUser) {
+            if(dpUrl) {
+                updatedUser.dp = dpUrl;
+            }
+
+            const user = await User.findByIdAndUpdate(
+                req.userId,
+                updatedUser,
+                {new: true}
+            ).select("-password");
+            
+        
+
+        if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-        console.log("Profile updated successfully for user:", updatedUser);
-        res.status(200).json({ message: "Profile updated successfully", user: updatedUser });
+        console.log("Profile updated successfully for user:", user);
+        res.status(200).json({ message: "Profile updated successfully", user: user });
     } catch (error) {
         res.status(500).json({ message: error.message });   
     }

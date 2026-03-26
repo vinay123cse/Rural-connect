@@ -5,12 +5,19 @@ import mongoose from 'mongoose';
 import userRoutes from './routes/user.routes.js';
 import cors from 'cors';
 
+import http from 'http';
+import {initSocket} from './socket/socket.js';
+
+
 
 
 
 
 const app = express();
+const server = http.createServer(app);
 const PORT = 3000;
+
+initSocket(server);
 
 app.use(cors({
     origin: '*',
@@ -37,6 +44,6 @@ const connectDB = async () => {
 
 connectDB();
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 })
