@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../context/authContext";
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 
 export default function Login() {
@@ -27,6 +28,12 @@ export default function Login() {
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const checkPhone = /^\d{10}$/.test(formData.phone);
+        if(!checkPhone){
+            setError("Please enter a valid phone number");
+            return;
+        }
 
         if(!formData.phone || !formData.password){
             setError("All fields are required!!");
@@ -76,6 +83,9 @@ export default function Login() {
                 </div>
                 {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
                 <button type="submit" className="w-full bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-emerald-500 focus:ring-offset-2">Login</button>
+                <div className='text-center'>
+                    <Link className='text-blue-500' to='/signup'>New user?Signup</Link>
+                </div>
             </form>
             
         </div>

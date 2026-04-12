@@ -1,9 +1,11 @@
-import { useState, useEffect, useRef, use } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../context/authContext';
 import axios from 'axios';
 import socket from '../socket/socket';
+import AudioCall from '../components/AudioCall';
+import { Phone, X, PhoneOff, Volume2, Mic } from 'lucide-react';
 
 
 const ChatSection = () => {
@@ -13,31 +15,57 @@ const ChatSection = () => {
   const [message, setMessage] = useState("");
   const [receiver, setReceiver] = useState({name: "", dp: ""});
   const [chatList, setChatList] = useState([]);
+
+  // Call States
+  const [calling, setCalling] = useState(false); // jab mai call karu
+  const [incomingCall, setIncomingCall] = useState(null); // Jab call aa rahi ho
+  const [isCallAccepted, setIsCallAccepted] = useState(false);
+
   
   const scrollRef = useRef();
+  const myId = userData?.user?._id;
 
   useEffect(() => {
-     const myId = userData?.user?._id;
+     
      console.log("My Name:", myId);
      if(myId) socket.emit("chat message", myId);
 
     //Pehle purana listener saaf karo
     socket.off("receive message");
 
-     socket.on("receive message", (data) => {
-       console.log("New message received", data);
-        setChatList((prev) => [...prev, {
-          id: Date.now(),
-          content: data.content,
-          sender: "other",
-          time: data.timestamp,
-          status: "read"
-        }]);
-     })
-    return () => socket.off("receive message");
+    socket.on("receive message", (data) => {
+      console.log("New message received", data);
+      setChatList((prev) => [...prev, {
+        id: Date.now(),
+        content: data.content,
+        sender: "other",
+        time: data.timestamp,
+        status: "read"
+      }]);
+    });
+
+    socket.on("incoming-call", (data) => {
+      console.log("Incoming call from :", data);
+      setIncomingCall(data);
+    });
+    socket.on("call-ended", () => {
+      setCalling(false);
+      setIncomingCall(null);
+      setIsCallAccepted(false);
+    });
+
+    
+
+    return () => {
+      socket.off("receive message");
+      socket.off("incoming-call");
+      socket.off("call-ended");
+    }
   }, [receiverId, userData]);
 
-  
+
+
+ 
 
   
 
@@ -85,9 +113,59 @@ const ChatSection = () => {
   },[receiverId])
 
 
+  
+
+
 
   return (
     <div className="flex flex-col h-screen bg-[#e5ddd5] font-sans overflow-hidden">
+      {/* --- INCOMING CALL POPUP (WhatsApp Style) --- */}
+      {incomingCall && !isCallAccepted && (
+        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[3000] w-[90%] max-w-sm bg-white shadow-2xl rounded-2xl p-8 flex items-center justify-between border-t-4 border-[#075e54]">
+          <div className="flex items-center gap-3">
+            
+            <div>
+              <p className="font-bold text-gray-800">{incomingCall.senderName}</p>
+              <p className="text-xs text-gray-500 italic">Incoming Voice Call...</p>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <button 
+              onClick={() => {
+                socket.emit("end-call", { to: incomingCall.fromId });
+                setIncomingCall(null);
+              }}
+              className="bg-red-500 text-white p-2 rounded-full shadow-lg"
+            >
+              <PhoneOff size={24} />
+            </button>
+            <button 
+              onClick={() => setIsCallAccepted(true)}
+              className="bg-green-500 text-white p-2 rounded-full shadow-lg"
+            >
+              <Phone size={24} />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* --- FULL SCREEN CALL UI --- */}
+      {(calling || isCallAccepted) && (
+        <AudioCall 
+          socket={socket}
+          receiverId={isCallAccepted ? incomingCall.fromId : receiver._id}
+          senderId={myId}
+          senderName={isCallAccepted ? incomingCall.fromName : receiver.name}
+          isCaller={calling}
+          incomingSignal={isCallAccepted ? incomingCall.signalData : null}
+          onClose={() => {
+            setCalling(false);
+            setIncomingCall(null);
+            setIsCallAccepted(false);
+          }}
+        />
+      )}
+      
       
       {/* --- WhatsApp Header --- */}
       <header className="bg-[#075e54] text-white px-4 py-3 flex items-center justify-between shadow-md">
@@ -116,8 +194,8 @@ const ChatSection = () => {
         </div>
 
         <div className="flex gap-4">
-          <button className="hover:bg-black/10 p-1 rounded-full">📞</button>
-          <button className="hover:bg-black/10 p-1 rounded-full">⋮</button>
+          <button className="hover:bg-black/10 p-1 rounded-full" onClick={() => setCalling(true)}>📞</button>
+          
         </div>
       </header>
 
@@ -160,19 +238,28 @@ const ChatSection = () => {
             className="flex-1 bg-transparent outline-none text-[15px] text-gray-800"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSendMessage(e);
+              }
+            }}
           />
+          </form>
           
-        </form>
+        
 
         <button 
           onClick={handleSendMessage}
           className={`w-12 h-12 bg-[#128c7e] text-white rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-all ${
             message.trim() ? "bg-[#128c7e] text-white opacity-100 scale-100 cursor-pointer active:scale-90" : "bg-slate-300 text-slate-500 opacity-50 scale-95 cursor-not-allowed"}`}
+          
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 rotate-45">
           <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
         </svg>
         </button>
+       
       </footer>
     </div>
   );

@@ -2,8 +2,14 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import ProCard from "../components/Procard.jsx";
 import Searchbar from '../components/Searchbar.jsx';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../context/authContext.jsx';
 
 function Body() {
+
+  const {userData} = useContext(AuthContext);
+
   const [pros, setPros] = useState([]); // Khali array se shuru karenge
   const [loading, setLoading] = useState(true);
   const [selectedExpert, setSelectedExpert] = useState(null);
@@ -134,8 +140,9 @@ const handleSearch = (searchData) => {
               />
             ))
           ) : (
-            <div className="col-span-full text-center py-20 bg-slate-50 rounded-[2.5rem] border-2 border-dashed border-slate-200">
+            <div className="col-span-full text-center py-20 bg-slate-50 rounded-[2.5rem] border-2 border-solid border-slate-200">
               <p className="text-slate-500 font-bold">Bhai, is area mein abhi koi professional nahi mila!</p>
+              <Link className='text-slate-500 font-bold p-4 cursor-pointer hover:text-slate-700' to={userData ? "/editprofile": "/login"}>Join as an Expert!</Link>
             </div>
           )}
         </div>

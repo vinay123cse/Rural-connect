@@ -3,6 +3,7 @@ import { AuthContext } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
   const { signup } = useContext(AuthContext);
@@ -86,6 +87,9 @@ export default function Signup() {
           >
             SignUp
           </button>
+          <div className="text-center">
+           <Link className="text-blue-500 text-center mx-auto" to="/login">Already have account?Login</Link>
+          </div>
         </form>
       </div>
 

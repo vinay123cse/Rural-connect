@@ -5,8 +5,9 @@ let io;
 const initSocket = (server) => {
     io = new Server(server, {
         cors: {
-            origin: "http://localhost:5173",
-            methods: ["GET", "POST"]
+            origin: process.env.FRONTEND_URL || "http://localhost:5173",
+            methods: ["GET", "POST"],
+            credentials:true
         }
     })
     io.on("connection",  (socket) => {
@@ -27,8 +28,33 @@ const initSocket = (server) => {
         });
         socket.on("disconnect", (socket) => {
             console.log("A user disconnected:", socket.id);
-        })
-    })
+        });
+
+        socket.on("call-user", ({receiverId, signalData, senderId, senderName }) => {
+            console.log(` call from ${senderName} to ${receiverId}`);
+            io.to(receiverId).emit("incoming-call", {
+                signalData,
+                senderId,
+                senderName
+            });
+        });
+
+        // call received by user and send response
+        socket.on('answer-call', (data) => {
+            io.to(data.to).emit('call-accepted', data.signal)
+        });
+
+        socket.on("ice-candidate", (data) => {
+            io.to(data.to).emit("ice-candidate", data.candidate);
+        });
+
+        // 4. Call Cut ki
+        socket.on("end-call", ({ to }) => {
+            io.to(to).emit("call-ended");
+        });
+
+        
+    });
 
     return io;
 }

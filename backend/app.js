@@ -20,9 +20,10 @@ const PORT = process.env.PORT || 3000;
 initSocket(server);
 
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: ["http://localhost:5173", "https://rural-connect-1-660v.onrender.com"],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
 
 app.use(express.json());
@@ -45,5 +46,5 @@ const connectDB = async () => {
 connectDB();
 
 server.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is live on :${PORT}`);
 })
