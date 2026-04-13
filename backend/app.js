@@ -28,7 +28,8 @@ const PORT = process.env.PORT || 3000;
 initSocket(server);
 
 app.use(cors({
-    origin: ["http://localhost:5173", "https://rural-connect-1-660v.onrender.com"],
+    // origin: ["http://localhost:5173", "https://rural-connect-1-660v.onrender.com"],
+    origin: "https://rural-connect-1-660v.onrender.com",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
