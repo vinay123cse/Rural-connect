@@ -38,15 +38,21 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Static files serve karne ke liye (agar build folder backend ke saath hai)
+app.use(express.static(path.join(__dirname, '../my-project/dist'))); 
+
+
 app.use(userRoutes)
 
 
 
-// Static files serve karne ke liye (agar build folder backend ke saath hai)
-app.use(express.static(path.join(__dirname, '../my-project/dist'))); 
 
 // Ye line "Not Found" ko fix karegi
-app.use(("*"), (req, res) => {
+app.use((req, res, next) => {
+    // Agar request API ya Socket ki hai toh use mat chedo
+    if (req.url.startsWith('/socket.io') || req.url.startsWith('/api')) {
+        return next();
+    }
   res.sendFile(path.join(__dirname, '../my-project/dist/index.html'));
 });
 
