@@ -23,14 +23,21 @@ const ProCard = ({ _id, name, category, subSkill, locationName, rate, available,
     } 
   }
 
- const user = JSON.parse(localStorage.getItem("user"));
- const myId = (userData?.user?.id || userData?.user?._id || user?.id || user?._id)?.toString();
+//  const user = JSON.parse(localStorage.getItem("user"));
+//  const myId = (userData?.user?.id || userData?.user?._id || user?.id || user?._id)?.toString();
 
- const isMyCard = myId === _id.toString();
+//  const isMyCard = myId === _id.toString();
 
-// console.log("1. Context Data:", userData);
+// 1. Safe parsing (checks if it's a real object string first)
+const storedUser = localStorage.getItem("user");
+const user = (storedUser && storedUser !== "undefined") ? JSON.parse(storedUser) : null;
 
-// console.log("3. Card ID:", _id);
+// 2. Safe ID extraction (using optional chaining)
+const myId = (userData?.user?.id || userData?.user?._id || user?.id || user?._id);
+
+// 3. Safe comparison (using optional chaining on _id to prevent .toString() errors)
+const isMyCard = myId && _id ? myId.toString() === _id.toString() : false;
+
 
 
 

@@ -13,6 +13,8 @@ export default function Signup() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     phone: "",
     password: "",
@@ -27,6 +29,7 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const payload = {
       phone: formData.phone,
@@ -81,11 +84,25 @@ export default function Signup() {
           />
           {error && <p className="text-red-600">{error}</p>}
 
+          {/* 4. Button ka text aur state change karo */}
           <button
             type="submit"
-            className="w-full bg-emerald-600 text-white p-2 rounded-lg hover:bg-emerald-700"
+            disabled={loading} // Loading ke waqt button disable kar do
+            className={`w-full p-2 rounded-lg text-white transition-all ${
+              loading ? "bg-emerald-400 cursor-not-allowed" : "bg-emerald-600 hover:bg-emerald-700"
+            }`}
           >
-            SignUp
+          {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Processing...
+              </span>
+            ) : (
+              "SignUp"
+            )}
           </button>
           <div className="text-center">
            <Link className="text-blue-500 text-center mx-auto" to="/login">Already have account?Login</Link>
@@ -93,7 +110,7 @@ export default function Signup() {
         </form>
       </div>
 
-      {success && (
+      {/* {success && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
         <div className="bg-white p-6 rounded-lg shadow-lg text-center w-80">
         <h2 className="text-xl font-bold text-emerald-600">
@@ -111,7 +128,7 @@ export default function Signup() {
         </button>
         </div>
         </div>
-        )}
+        )} */}
 
     </div>
     // success pop up

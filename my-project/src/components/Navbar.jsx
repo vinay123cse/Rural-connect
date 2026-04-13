@@ -87,9 +87,9 @@ const Navbar = () => {
               )}
               
             </button>
-            {/* <Link to="/editprofile" className="sm:text-sm font-bold text-emerald-600 hover:text-slate-900 px-4 py-2">
+            <Link to="/editprofile" className="sm:text-sm font-bold text-emerald-600 hover:text-slate-900 px-4 py-2">
               Edit Profile
-            </Link> */}
+            </Link>
             <div className='w-10 h-10 rounded-full overflow-hidden bg-emerald-50 border border-slate-300 flex items-center justify-center '>
               {userData?.user?.dp ? (
                 <img src={userData?.user?.dp || userData?.dp} alt="profile" className='w-full h-full object-cover' />

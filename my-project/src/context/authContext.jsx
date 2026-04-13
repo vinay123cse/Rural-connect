@@ -27,10 +27,19 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        const user = localStorage.getItem("user");
-        if(token && user){
-            
-            setUserData({token, user: JSON.parse(user)});
+        const userStr = localStorage.getItem("user");
+
+        // FIX: Added extra check for "undefined" string
+        if (token && userStr && userStr !== "undefined") {
+            try {
+                const parsedUser = JSON.parse(userStr);
+                setUserData({ token, user: parsedUser });
+            } catch (error) {
+                console.error("Error parsing user from localStorage:", error);
+                // If data is corrupted, clear it so it doesn't crash again
+                localStorage.removeItem("user");
+                localStorage.removeItem("token");
+            }
         }
     }, []);
 
@@ -89,6 +98,12 @@ export const AuthProvider = ({children}) => {
     const updateProfile = async (data) => {
         try {
             const token = localStorage.getItem("token");
+            console.log("token",token)
+            if (!token) {
+                toast.error("Session expired. Please log in again.");   
+                logout();
+                return;
+            }
             const response = await client.put("/update_profile", data, {
                 headers: {
                     "Content-Type" :"multipart/form-data",

@@ -59,52 +59,123 @@
 //     </div>
 //   )
 // }
+// export default function Footer() {
+//   return (
+   
+// <footer className="bg-slate-900 text-slate-300 py-12 px-6">
+//   <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+//     {/* Column 1: Brand */}
+//     <div className="col-span-2 md:col-span-1">
+//       <h2 className="text-2xl font-black text-white mb-4">RURAL<span className="text-emerald-500">JOBS</span></h2>
+//       <p className="text-sm">Connecting rural talent with local opportunities.</p>
+//     </div>
+
+//     {/* Column 2: Seekers */}
+//     <div>
+//       <h3 className="text-white font-bold mb-4 uppercase text-xs tracking-widest">Seekers</h3>
+//       <ul className="space-y-2 text-sm">
+//         <li className="hover:text-emerald-500 cursor-pointer">Local Jobs</li>
+//         <li className="hover:text-emerald-500 cursor-pointer">Daily Wages</li>
+//         <li className="hover:text-emerald-500 cursor-pointer">Career Tips</li>
+//       </ul>
+//     </div>
+
+//     {/* Column 3: Safety */}
+//     <div>
+//       <h3 className="text-white font-bold mb-4 uppercase text-xs tracking-widest">Trust & Safety</h3>
+//       <ul className="space-y-2 text-sm">
+//         <li className="hover:text-emerald-500 cursor-pointer">Verify Profile</li>
+//         <li className="hover:text-emerald-500 cursor-pointer">Safe Hiring</li>
+//         <li className="hover:text-emerald-500 cursor-pointer">Privacy</li>
+//       </ul>
+//     </div>
+
+//     {/* Column 4: Support */}
+//     <div>
+//       <h3 className="text-white font-bold mb-4 uppercase text-xs tracking-widest">Support</h3>
+//       <div className="bg-emerald-500/10 p-3 rounded-xl border border-emerald-500/20">
+//          <p className="text-xs text-emerald-500 font-bold mb-1">Need help?</p>
+//          <button className="text-white text-sm font-bold flex items-center gap-2">
+//             <span className="bg-emerald-500 p-1 rounded-full text-[8px]">📞</span> 1800-RURAL-JOB
+//          </button>
+//       </div>
+//     </div>
+//   </div>
+
+//   <div className="mt-12 pt-8 border-t border-slate-800 text-center text-xs">
+//     <p>&copy; 2026 Rural Job Finder. Made with ❤️ in India for the World.</p>
+//   </div>
+// </footer>
+// )
+// }
+
+
+
+// for adsense
+
+import { Link } from 'react-router-dom'; // Link use karna SEO ke liye accha hai
+
 export default function Footer() {
   return (
-   
-<footer className="bg-slate-900 text-slate-300 py-12 px-6">
-  <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
-    {/* Column 1: Brand */}
-    <div className="col-span-2 md:col-span-1">
-      <h2 className="text-2xl font-black text-white mb-4">RURAL<span className="text-emerald-500">JOBS</span></h2>
-      <p className="text-sm">Connecting rural talent with local opportunities.</p>
-    </div>
+    <footer className="bg-slate-900 text-slate-300 py-12 px-6 border-t border-slate-800">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+        
+        {/* Column 1: Brand & About */}
+        <div className="col-span-2 md:col-span-1">
+          <h2 className="text-2xl font-black text-white mb-4">RURAL<span className="text-emerald-500">JOBS</span></h2>
+          <p className="text-sm leading-relaxed">
+            India's most trusted platform for connecting rural talent with local opportunities. 
+            Empowering the grassroots workforce through technology.
+          </p>
+        </div>
 
-    {/* Column 2: Seekers */}
-    <div>
-      <h3 className="text-white font-bold mb-4 uppercase text-xs tracking-widest">Seekers</h3>
-      <ul className="space-y-2 text-sm">
-        <li className="hover:text-emerald-500 cursor-pointer">Local Jobs</li>
-        <li className="hover:text-emerald-500 cursor-pointer">Daily Wages</li>
-        <li className="hover:text-emerald-500 cursor-pointer">Career Tips</li>
-      </ul>
-    </div>
+        {/* Column 2: Resources (SEO Friendly) */}
+        <div>
+          <h3 className="text-white font-bold mb-4 uppercase text-xs tracking-widest">Resources</h3>
+          <ul className="space-y-2 text-sm">
+            <li><Link to="/jobs" className="hover:text-emerald-500 transition-colors">Find Local Jobs</Link></li>
+            <li><Link to="/wages" className="hover:text-emerald-500 transition-colors">Daily Wage Guide</Link></li>
+            <li><Link to="/career-tips" className="hover:text-emerald-500 transition-colors">Career Advice</Link></li>
+            <li><Link to="/about" className="hover:text-emerald-500 transition-colors">About Us</Link></li>
+          </ul>
+        </div>
 
-    {/* Column 3: Safety */}
-    <div>
-      <h3 className="text-white font-bold mb-4 uppercase text-xs tracking-widest">Trust & Safety</h3>
-      <ul className="space-y-2 text-sm">
-        <li className="hover:text-emerald-500 cursor-pointer">Verify Profile</li>
-        <li className="hover:text-emerald-500 cursor-pointer">Safe Hiring</li>
-        <li className="hover:text-emerald-500 cursor-pointer">Privacy</li>
-      </ul>
-    </div>
+        {/* Column 3: Legal (Mandatory for AdSense) */}
+        <div>
+          <h3 className="text-white font-bold mb-4 uppercase text-xs tracking-widest">Legal & Privacy</h3>
+          <ul className="space-y-2 text-sm">
+            <li><Link to="/privacy" className="hover:text-emerald-500 transition-colors text-emerald-500/90 font-medium">Privacy Policy</Link></li>
+            <li><Link to="/terms" className="hover:text-emerald-500 transition-colors">Terms of Service</Link></li>
+            <li><Link to="/disclaimer" className="hover:text-emerald-500 transition-colors">Disclaimer</Link></li>
+            <li><Link to="/contact" className="hover:text-emerald-500 transition-colors">Contact Us</Link></li>
+          </ul>
+        </div>
 
-    {/* Column 4: Support */}
-    <div>
-      <h3 className="text-white font-bold mb-4 uppercase text-xs tracking-widest">Support</h3>
-      <div className="bg-emerald-500/10 p-3 rounded-xl border border-emerald-500/20">
-         <p className="text-xs text-emerald-500 font-bold mb-1">Need help?</p>
-         <button className="text-white text-sm font-bold flex items-center gap-2">
-            <span className="bg-emerald-500 p-1 rounded-full text-[8px]">📞</span> 1800-RURAL-JOB
-         </button>
+        {/* Column 4: Contact & Support */}
+        <div>
+          <h3 className="text-white font-bold mb-4 uppercase text-xs tracking-widest">Contact Support</h3>
+          <div className="bg-emerald-500/10 p-4 rounded-xl border border-emerald-500/20">
+             <p className="text-xs text-emerald-500 font-bold mb-2">Have questions?</p>
+             <a href="tel:1800RURALJOB" className="text-white text-sm font-bold flex items-center gap-2 mb-2 hover:text-emerald-400">
+                <span className="bg-emerald-500 p-1 rounded-full text-[10px]">📞</span> 1800-RURAL-JOB
+             </a>
+             <a href="mailto:support@ruraljobs.com" className="text-white text-xs font-medium flex items-center gap-2 hover:text-emerald-400">
+                <span className="bg-slate-700 p-1 rounded-full text-[10px]">✉️</span> support@ruraljobs.com
+             </a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div className="mt-12 pt-8 border-t border-slate-800 text-center text-xs">
-    <p>&copy; 2026 Rural Job Finder. Made with ❤️ in India for the World.</p>
-  </div>
-</footer>
-)
-}
+      {/* Bottom Bar */}
+      <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-widest">
+        <p>&copy; 2026 Rural Job Finder India Private Limited.</p>
+        <div className="flex gap-6">
+            <span className="hover:text-white cursor-pointer">LinkedIn</span>
+            <span className="hover:text-white cursor-pointer">Twitter</span>
+            <span className="hover:text-white cursor-pointer">Facebook</span>
+        </div>
+        <p>Made with ❤️ in India for the World.</p>
+      </div>
+    </footer>
+  );
+} 

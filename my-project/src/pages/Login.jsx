@@ -81,7 +81,7 @@ export default function Login() {
                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
                     <input type="password" id="password" name='password' value={formData.password} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"/>
                 </div>
-                {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
+                {error && <p className="text-red-500 text-sm mt-4">{error.message}</p>}
                 <button type="submit" className="w-full bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-emerald-500 focus:ring-offset-2">Login</button>
                 <div className='text-center'>
                     <Link className='text-blue-500' to='/signup'>New user?Signup</Link>
