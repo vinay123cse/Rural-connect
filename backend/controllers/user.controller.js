@@ -26,8 +26,13 @@ export const signupUser = async (req, res) => {
       // baaki fields empty rahengi
       isProfileComplete: false
     });
-
-    res.status(201).json({ message: "Signup successful", userId: newUser._id });
+    const token = jwt.sign({ id: newUser._id, phone: newUser.phone }, process.env.JWT_SECRET, { expiresIn: process.env.EXPIRES_IN });
+    const { password: _, ...userData } = newUser._doc; //password chhodkr baaki sb frontend ko bhej do
+    res.status(201).json({ 
+        message: "Signup successful", 
+        userId: newUser._id, 
+        token,
+        user: userData });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

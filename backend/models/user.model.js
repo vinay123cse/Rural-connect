@@ -57,7 +57,7 @@ const userSchema = new mongoose.Schema({
     rate: { type: String },
     rating: { type: Number, default: 0 },
     available: { type: Boolean, default: true },
-    dp: { type: String, default: 'https://i.pravatar.cc/150' },
+    dp: { type: String, default: 'https://www.shutterstock.com/image-vector/default-avatar-profile-icon-transparent-600nw-2463868847.jpg' },
     color: { type: String, default: 'text-emerald-500' },
     
     // --- LOCATION (Signup ke baad auto-fetch hogi) ---
