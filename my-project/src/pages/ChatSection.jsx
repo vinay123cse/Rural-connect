@@ -99,7 +99,7 @@ const ChatSection = () => {
   useEffect(() => {
     const fetchReceiverData = async () => {
       try{
-      const fetchReceiverData = await axios.get(`http://localhost:3000/chat/${receiverId}`);
+      const fetchReceiverData = await axios.get(`https://rural-connect-6jba.onrender.com/chat/${receiverId}`);
       setReceiver({ _id: fetchReceiverData.data._id, name: fetchReceiverData.data.name, dp: fetchReceiverData.data.dp });
 
     }catch(err){
