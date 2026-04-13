@@ -9,6 +9,14 @@ import http from 'http';
 import {initSocket} from './socket/socket.js';
 
 
+// ES Modules mein path aur __dirname aise setup karte hain
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
 
 
 
@@ -30,6 +38,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(userRoutes)
+
+
+
+// Static files serve karne ke liye (agar build folder backend ke saath hai)
+app.use(express.static(path.join(__dirname, '../my-project/dist'))); 
+
+// Ye line "Not Found" ko fix karegi
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../my-project/dist/index.html'));
+});
 
 
 
