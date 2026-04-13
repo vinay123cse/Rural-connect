@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 // URL ko variable mein rakhna accha rehta hai
-const SOCKET_URL = ["https://rural-connect-6jba.onrender.com", "http://localhost:3000"];
+const SOCKET_URL = "https://rural-connect-6jba.onrender.com";
 // const SOCKET_URL = "http://localhost:3000";
 
 const socket = io(SOCKET_URL, {
