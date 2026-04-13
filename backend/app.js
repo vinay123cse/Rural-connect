@@ -46,7 +46,7 @@ app.use(userRoutes)
 app.use(express.static(path.join(__dirname, '../my-project/dist'))); 
 
 // Ye line "Not Found" ko fix karegi
-app.use((req, res) => {
+app.use(("*"), (req, res) => {
   res.sendFile(path.join(__dirname, '../my-project/dist/index.html'));
 });
 
