@@ -43,17 +43,17 @@ app.use(userRoutes)
 
 
 
-
-// 2. Static files (BUILD folder ka path)
-// Dhyaan dena ki path sahi ho: ../my-project/dist
 app.use(express.static(path.join(__dirname, '../my-project/dist')));
 
-// 3. Sabse niche ye logic dalo (Bina kisi Regex/Wildcard ke)
-app.get('*', (req, res) => {
-    // Agar request backend ki nahi hai, toh index.html bhej do
-    res.sendFile(path.resolve(__dirname, '../my-project/dist', 'index.html'));
+// 3. Sabse niche ye dalo - Bina kisi Regex ke
+// Ye har us request ko pakdega jo upar match nahi hui
+app.use((req, res, next) => {
+    // Agar request backend assets ya socket ki nahi hai, toh index.html bhej do
+    if (req.method === 'GET' && !req.path.includes('.')) {
+        return res.sendFile(path.resolve(__dirname, '../my-project/dist', 'index.html'));
+    }
+    next();
 });
-
 
 
 
