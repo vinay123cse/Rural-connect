@@ -43,14 +43,18 @@ app.use(userRoutes)
 
 
 
-//1. Static files serve karo
-const distPath = path.resolve(__dirname, '../my-project/dist');
-app.use(express.static(distPath));
+// 2. Static files (dist folder)
+app.use(express.static(path.join(__dirname, '../my-project/dist')));
 
-// Isko copy-paste karo (Express 5 compatible)
-app.get('(.*)', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../my-project/dist', 'index.html'));
+// 3. REFRESH FIX: Ye middleware har route ko index.html par redirect karega
+app.use((req, res, next) => {
+    // Agar GET request hai aur file nahi hai (no dot in path), toh index.html bhejo
+    if (req.method === 'GET' && !req.path.includes('.')) {
+        return res.sendFile(path.resolve(__dirname, '../my-project/dist', 'index.html'));
+    }
+    next();
 });
+
 
 const connectDB = async () => {
     try {
