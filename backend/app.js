@@ -48,6 +48,10 @@ app.use(express.static(path.join(__dirname, '../my-project/dist')));
 
 // 3. REFRESH FIX: Ye middleware har route ko index.html par redirect karega
 app.use((req, res, next) => {
+    // 1. Agar request API ki hai, toh use backend hi handle karne do
+    if (req.path.startsWith('/api')) {
+        return next();
+    }
     // Agar GET request hai aur file nahi hai (no dot in path), toh index.html bhejo
     if (req.method === 'GET' && !req.path.includes('.')) {
         return res.sendFile(path.resolve(__dirname, '../my-project/dist', 'index.html'));
