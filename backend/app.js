@@ -43,7 +43,7 @@ app.use(userRoutes)
 
 
 
-/ 1. Static files serve karo
+//1. Static files serve karo
 const distPath = path.resolve(__dirname, '../my-project/dist');
 app.use(express.static(distPath));
 
