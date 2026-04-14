@@ -47,17 +47,10 @@ app.use(userRoutes)
 const distPath = path.resolve(__dirname, '../my-project/dist');
 app.use(express.static(distPath));
 
-// 2. EXPRESS 5 CATCH-ALL (Sabse simple aur effective)
-// Ise bilkul end mein rakho server.listen se pehle
-app.get('*', (req, res) => {
-    res.sendFile(path.join(distPath, 'index.html'), (err) => {
-        if (err) {
-            res.status(500).send(err);
-        }
-    });
+// Isko copy-paste karo (Express 5 compatible)
+app.get('(.*)', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../my-project/dist', 'index.html'));
 });
-
-
 
 const connectDB = async () => {
     try {
