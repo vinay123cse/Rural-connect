@@ -43,16 +43,18 @@ app.use(userRoutes)
 
 
 
-app.use(express.static(path.join(__dirname, '../my-project/dist')));
+/ 1. Static files serve karo
+const distPath = path.resolve(__dirname, '../my-project/dist');
+app.use(express.static(distPath));
 
-// 3. Sabse niche ye dalo - Bina kisi Regex ke
-// Ye har us request ko pakdega jo upar match nahi hui
-app.use((req, res, next) => {
-    // Agar request backend assets ya socket ki nahi hai, toh index.html bhej do
-    if (req.method === 'GET' && !req.path.includes('.')) {
-        return res.sendFile(path.resolve(__dirname, '../my-project/dist', 'index.html'));
-    }
-    next();
+// 2. EXPRESS 5 CATCH-ALL (Sabse simple aur effective)
+// Ise bilkul end mein rakho server.listen se pehle
+app.get('*', (req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'), (err) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+    });
 });
 
 
